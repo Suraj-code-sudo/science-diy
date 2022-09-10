@@ -22,7 +22,38 @@
                     <div class="input_group">
                         <form method="POST" enctype="multipart/form-data" action="">
                             {% csrf_token %}
-                            {{form.as_p}}
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col-sm">
+                                        <label>Experiment Name: </label>
+                                        <div class="form-control">{{form.exp_name}}</div><br/>
+                                    </div>
+                                    <div class="col-sm">
+                                        <label>Difficulty: </label>
+                                        <div class="form-control">{{form.difficulty}}</div><br/>                                                
+                                    </div>
+                                    <div class="col-sm">
+                                        <label>Subject:</label>
+                                        <div class="form-control">{{form.subject}}</div><br/>                                                
+                                    </div>
+                                </div>
+                                
+                                <label>Description: </label>
+                                <div class="form-control">{{form.description}}</div><br/>
+
+                                <div class="input-group mb-3">
+                                    <label>Image: </label>
+                                    <div class="form-control">{{form.image}}</div><br/>
+                                </div>
+                                
+                                <label>Safety: </label>
+                                <div class="form-control">{{form.safety}}</div><br/>
+
+                                <label>Steps: </label>
+                                <div class="form-control">{{form.steps}}</div><br/>
+
+                                
+                            </div>
                             <input class="btn btn-primary" type="submit" value="Submit">
                         </form>
                     </div>
