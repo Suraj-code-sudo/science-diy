@@ -1,12 +1,14 @@
-from ast import Expression
-from django.shortcuts import render
+from .models import Experiments
+from django.http import JsonResponse
+from rest_framework.response import Response
+from django.views.decorators.csrf import csrf_exempt
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
 from django.urls import reverse_lazy
 from django.contrib.auth.views import LoginView
 from django.contrib.auth.mixins import LoginRequiredMixin
-from .models import Experiments
+
 # Create your views here.
 
 class CustomLoginView(LoginView):
@@ -56,7 +58,18 @@ class Student_list(ListView):
     template_name = "diy/student_list.html"
     context_object_name = "exp_list"
 
+    ordering = ['-claps']
+
 class Student_Detail(DetailView):
     model = Experiments
     template_name = "diy/student_detail.html"
     context_object_name = "experiment"
+
+@csrf_exempt
+def clap(request, pk):
+    if request.method == 'POST':
+        model = Experiments.objects.get(id=pk)
+        model.claps += 1
+        model.save()
+        content='Liked'
+        return JsonResponse(content, safe=False)

@@ -11,8 +11,9 @@ class Experiments(models.Model):
     subject = models.CharField(blank=False, max_length=100)
     image = models.ImageField(upload_to='images/')
     safety = models.TextField(blank=False)
+    claps = models.IntegerField()
     steps = models.TextField(blank=True)
-
+    
     def __str__(self):
         return self.exp_name
     
