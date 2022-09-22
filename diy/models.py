@@ -1,17 +1,18 @@
 from django.db import models
-from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
+User=get_user_model()
 
-# Create your models here.
 
 class Experiments(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
+    user = models.ForeignKey(
+        User, on_delete=models.CASCADE, null=True, blank=True)
     exp_name = models.CharField(blank=False, max_length=100)
     description = models.TextField(blank=False, null=False)
     difficulty = models.IntegerField(blank=False)
     subject = models.CharField(blank=False, max_length=100)
     image = models.ImageField(upload_to='images/')
     safety = models.TextField(blank=False)
-    claps = models.IntegerField()
+    claps = models.IntegerField(null=True, blank=True,default=1)
     steps = models.TextField(blank=True)
     
     def __str__(self):

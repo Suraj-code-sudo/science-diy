@@ -23,15 +23,19 @@ class ExpList(LoginRequiredMixin, ListView):
     model = Experiments
     context_object_name= "exp_list"
     template_name = "diy/experiments_list.html"
-    # def get_context_data(self, **kwargs):
-    #     context = super().get_context_data(**kwargs)
-    #     context['exp_list'] = context['exp_list'].filter(user=self.request.user)
-    #     return context
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['exp_list'] = context['exp_list'].filter(user=self.request.user)
+        return context
+
 
 class ExpDetail(LoginRequiredMixin, DetailView):
     context_object_name= "experiment"
     model = Experiments
     template_name = "diy/experiment.html"
+
+    
 
 class ExpCreate(LoginRequiredMixin, CreateView):
     model = Experiments
@@ -60,6 +64,8 @@ class Student_list(ListView):
 
     ordering = ['-claps']
 
+    
+
 class Student_Detail(DetailView):
     model = Experiments
     template_name = "diy/student_detail.html"
@@ -69,7 +75,11 @@ class Student_Detail(DetailView):
 def clap(request, pk):
     if request.method == 'POST':
         model = Experiments.objects.get(id=pk)
-        model.claps += 1
+        if model.claps == None:
+            model.claps = 1
+        else:
+            model.claps += 1
+
         model.save()
         content='Liked'
         return JsonResponse(content, safe=False)
